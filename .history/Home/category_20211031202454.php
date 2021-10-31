@@ -4,6 +4,18 @@ $brand_id = $_GET['brand'];
 $sql = "SELECT * FROM ThuongHieu WHERE ThuongHieu.MSTH = '$brand_id'";
 $rs = mysqli_query($conn, $sql);
 
+// $sql_brand = "SELECT * FROM `ThuongHieu`";
+// $rs_brand = mysqli_query($conn, $sql_brand);
+// while ($brands = mysqli_fetch_array($rs_brand)) {
+//     echo "<pre>";
+//     print_r($brands['TenTH']);
+// }
+// echo $brand_id;
+// exit;
+
+
+
+// $sql_prd = "SELECT * FROM LoaiSanPham WHERE LoaiSanPham.TenLSP = ''";
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -42,7 +54,7 @@ $rs = mysqli_query($conn, $sql);
                                 <?php
                                 $sql_brand = "SELECT * FROM `ThuongHieu`";
                                 $rs_brand = mysqli_query($conn, $sql_brand);
-                                while ($brands = mysqli_fetch_assoc($rs_brand)) { ?>
+                                while ($brands = mysqli_fetch_array($rs_brand)) { ?>
                                     <li class="category-item">
                                         <a href="./category.php?brand=<?php echo $brands['MSTH'];?>" 
                                             class="category_link 

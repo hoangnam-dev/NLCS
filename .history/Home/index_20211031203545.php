@@ -5,7 +5,7 @@ include("./connection.php");
 $sql = "SELECT * FROM SanPham";
 $rs = mysqli_query($conn, $sql);
 
-$sql1 = "SELECT * FROM sanpham INNER JOIN loaisanpham on sanpham.MLSP = loaisanpham.MLSP WHERE loaisanpham.TenLSP LIKE 'Điện thoại' AND SanPham.NoiBat = '1'";
+$sql1 = "SELECT * FROM sanpham INNER JOIN loaisanpham on sanpham.MLSP = loaisanpham.MLSP WHERE loaisanpham.TenLSP LIKE 'Điện thoại'";
 $rs1 = mysqli_query($conn, $sql1);
 
 $sql_brand = "SELECT * FROM NhanHieu";
@@ -56,7 +56,7 @@ $rs_category = mysqli_query($conn, $sql_category);
                                 <!-- Product Item -->
                                 <?php
                                 while ($product_sale = mysqli_fetch_array($rs)) {
-                                    if(number_format($product_sale['GiaBan'],0,',','.')>0){
+                                    
                                 ?>
                                     <div class="grid_col-3">
                                         <div class="product-item">
@@ -65,8 +65,8 @@ $rs_category = mysqli_query($conn, $sql_category);
                                             </a>
                                             <h3 class="product-item_name"><?php echo $product_sale['TenSP'] ?></h3>
                                             <div class="product-item_price">
-                                                <span class="product-item_price-old"><?php echo number_format($product_sale['Gia'], 0, ',', '.')?></span>
-                                                <span class="product-item_price-new"><?php echo number_format($product_sale['GiaBan'], 0, ',', '.')?></span>
+                                                <span class="product-item_price-old"><?php echo number_format($product_sale['Gia'], 0, ',', '.') ?></span>
+                                                <span class="product-item_price-new"><?php echo number_format($product_sale['GiaBan'], 0, ',', '.') ?></span>
                                             </div>
                                             <span class="product-item_description"><?php echo $product_sale['MoTa'] ?></span>
                                             <div class="product-item_rating">
@@ -86,8 +86,7 @@ $rs_category = mysqli_query($conn, $sql_category);
                                             </div>
                                         </div>
                                     </div>
-                                <?php } // End IF-ELSE
-                                }?> <!-- END WHILE -->
+                                <?php }; ?>
 
                             </div>
                         </div>
@@ -112,12 +111,13 @@ $rs_category = mysqli_query($conn, $sql_category);
                                             </a>
                                             <h3 class="product-item_name"><?php echo $product['TenSP'] ?></h3>
                                             <div class="product-item_price">
-                                                <?php if(number_format($product['GiaBan'], 0, ',', '.') <= 0){?>
+                                                <?php if(number_format($product['GiaBan'], 0, ',', '.') > 0){?>
                                                     <span class="product-item_price-new"><?php echo number_format($product['Gia'], 0, ',', '.')?></span>    
                                                 <?php } else{?>
-                                                    <span class="product-item_price-old"><?php echo number_format($product['Gia'], 0, ',', '.')?></span>
-                                                    <span class="product-item_price-new"><?php echo number_format($product['GiaBan'], 0, ',', '.')?></span>
-                                                <?php }?>
+                                                    <!-- <span class="product-item_price-old"><?php echo number_format($product['Gia'], 0, ',', '.')?></span>
+                                                    <span class="product-item_price-new"><?php echo number_format($product['GiaBan'], 0, ',', '.')?></span> -->
+                                                    
+                                                <?php echo "else"; }?>
                                             </div>
                                             <span class="product-item_description"><?php echo $product['MoTa'] ?></span>
                                             <div class="product-item_rating">

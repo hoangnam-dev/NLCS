@@ -4,6 +4,9 @@ $brand_id = $_GET['brand'];
 $sql = "SELECT * FROM ThuongHieu WHERE ThuongHieu.MSTH = '$brand_id'";
 $rs = mysqli_query($conn, $sql);
 
+$sql_brand = "SELECT * FROM ThuongHieu";
+$rs_brand = mysqli_query($conn, $sql_brand);
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -40,8 +43,8 @@ $rs = mysqli_query($conn, $sql);
                             </h3>
                             <ul class="category-list">
                                 <?php
-                                $sql_brand = "SELECT * FROM `ThuongHieu`";
-                                $rs_brand = mysqli_query($conn, $sql_brand);
+                                // $sql_brand = "SELECT * FROM `ThuongHieu`";
+                                // $rs_brand = mysqli_query($conn, $sql_brand);
                                 while ($brands = mysqli_fetch_assoc($rs_brand)) { ?>
                                     <li class="category-item">
                                         <a href="./category.php?brand=<?php echo $brands['MSTH'];?>" 

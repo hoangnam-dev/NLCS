@@ -55,7 +55,7 @@ $rs_category = mysqli_query($conn, $sql_category);
 
                                 <!-- Product Item -->
                                 <?php
-                                while ($product_sale = mysqli_fetch_array($rs)) {
+                                while ($product_sale = mysqli_fetch_array($rs) && mysqli_num_rows($rs) < 7) {
                                     if(number_format($product_sale['GiaBan'],0,',','.')>0){
                                 ?>
                                     <div class="grid_col-3">
@@ -87,7 +87,7 @@ $rs_category = mysqli_query($conn, $sql_category);
                                         </div>
                                     </div>
                                 <?php } // End IF-ELSE
-                                }?> <!-- END WHILE -->
+                                } ?> <!-- END WHILE -->
 
                             </div>
                         </div>

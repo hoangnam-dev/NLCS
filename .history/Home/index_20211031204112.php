@@ -5,7 +5,7 @@ include("./connection.php");
 $sql = "SELECT * FROM SanPham";
 $rs = mysqli_query($conn, $sql);
 
-$sql1 = "SELECT * FROM sanpham INNER JOIN loaisanpham on sanpham.MLSP = loaisanpham.MLSP WHERE loaisanpham.TenLSP LIKE 'Điện thoại' AND SanPham.NoiBat = '1'";
+$sql1 = "SELECT * FROM sanpham INNER JOIN loaisanpham on sanpham.MLSP = loaisanpham.MLSP WHERE loaisanpham.TenLSP LIKE 'Điện thoại'";
 $rs1 = mysqli_query($conn, $sql1);
 
 $sql_brand = "SELECT * FROM NhanHieu";
@@ -87,7 +87,7 @@ $rs_category = mysqli_query($conn, $sql_category);
                                         </div>
                                     </div>
                                 <?php } // End IF-ELSE
-                                }?> <!-- END WHILE -->
+                                } ?> <!-- END WHILE -->
 
                             </div>
                         </div>

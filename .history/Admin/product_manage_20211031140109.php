@@ -79,23 +79,23 @@ $rs = mysqli_query($conn,$sql);
                                             ?>
                                         </td>
                                         <td>
-                                            <?php if($product['NoiBat']==1){?>
-                                            <div onclick="hot_prd(<?php echo $product['MSSP']?>,0)"  class="check">
-                                                <i class="prd-icon fas fa-check-circle"></i>
-                                            </div>
-                                            <?php }else{?>
-                                            <div class="exit" onclick="hot_prd(<?php echo $product['MSSP']?>,1)">
-                                            <i class="prd-icon fas fa-times-circle"></i>
-                                            </div>
-                                            <?php }?>
-                                        </td>
-                                        <td>
                                             <?php if($product['TrangThai']==1){?>
                                             <div onclick="stt_prd(<?php echo $product['MSSP']?>,0)"  class="check">
                                                 <i class="prd-icon fas fa-check-circle"></i>
                                             </div>
                                             <?php }else{?>
                                             <div class="exit" onclick="stt_prd(<?php echo $product['MSSP']?>,1)">
+                                            <i class="prd-icon fas fa-times-circle"></i>
+                                            </div>
+                                            <?php }?>
+                                        </td>
+                                        <td>
+                                            <?php if($product['NoiBat']==1){?>
+                                            <div onclick="hot(<?php echo $product['MSSP']?>,0)"  class="check">
+                                                <i class="prd-icon fas fa-check-circle"></i>
+                                            </div>
+                                            <?php }else{?>
+                                            <div class="exit" onclick="hot_prd(<?php echo $product['MSSP']?>,1)">
                                             <i class="prd-icon fas fa-times-circle"></i>
                                             </div>
                                             <?php }?>
@@ -119,17 +119,16 @@ $rs = mysqli_query($conn,$sql);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./asset/jquery/main.js"></script>
     <script>
-        // Sản Phẩm Nổi Bật 
-        function hot_prd(id,hot){
-            // if(hot==0){
-            //     alert("Ngừng kinh doanh sản phẩm này?");
-            // }else{
-            //     alert("Kinh doanh lại sản phẩm này?");
-            // }
+        function stt_prd(id,status){
+            if(status==0){
+                alert("Ngừng kinh doanh sản phẩm này?");
+            }else{
+                alert("Kinh doanh lại sản phẩm này?");
+            }
             $.ajax({
                 type: "POST",
-                url: './process.php?hot-prd',
-                data: {id:id,hot:hot}, // Gửi dữ liệu
+                url: './process.php?stt-prd',
+                data: {id:id,stt:status}, // Gửi dữ liệu
                 success: function(response) {
                     response = JSON.parse(response);
                     if (response.status == "0") {
@@ -143,18 +142,16 @@ $rs = mysqli_query($conn,$sql);
                 }
             });
         }
-
-        // Kinh Doanh Sản Phẩm
-        function stt_prd(id,status){
-            if(status==0){
-                alert("Ngừng kinh doanh sản phẩm này?");
-            }else{
-                alert("Kinh doanh lại sản phẩm này?");
-            }
+        function hot_prd(id,hot){
+            // if(hot==0){
+            //     alert("Ngừng kinh doanh sản phẩm này?");
+            // }else{
+            //     alert("Kinh doanh lại sản phẩm này?");
+            // }
             $.ajax({
                 type: "POST",
-                url: './process.php?stt-prd',
-                data: {id:id,stt:status}, // Gửi dữ liệu
+                url: './process.php?hot-prd',
+                data: {id:id,hot:hot}, // Gửi dữ liệu
                 success: function(response) {
                     response = JSON.parse(response);
                     if (response.status == "0") {

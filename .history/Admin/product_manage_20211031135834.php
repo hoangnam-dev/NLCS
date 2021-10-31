@@ -66,7 +66,7 @@ $rs = mysqli_query($conn,$sql);
                                     <tr>
                                         <td><?php echo $i;?></td>
                                         <td><?php echo $product['TenSP']?></td>
-                                        <!-- <td><?php echo number_format($product['Gia'],0,',','.')?></td> -->
+                                        <td><?php echo number_format($product['Gia'],0,',','.')?></td>
                                         <td><?php echo number_format($product['GiaBan'],0,',','.')?></td>
                                         <td><?php echo $product['SoLuongHang']?></td>
                                         <td>
@@ -77,17 +77,6 @@ $rs = mysqli_query($conn,$sql);
                                                 $category_name = mysqli_fetch_assoc($rs1);
                                                 echo $category_name['TenLSP'];
                                             ?>
-                                        </td>
-                                        <td>
-                                            <?php if($product['NoiBat']==1){?>
-                                            <div onclick="hot_prd(<?php echo $product['MSSP']?>,0)"  class="check">
-                                                <i class="prd-icon fas fa-check-circle"></i>
-                                            </div>
-                                            <?php }else{?>
-                                            <div class="exit" onclick="hot_prd(<?php echo $product['MSSP']?>,1)">
-                                            <i class="prd-icon fas fa-times-circle"></i>
-                                            </div>
-                                            <?php }?>
                                         </td>
                                         <td>
                                             <?php if($product['TrangThai']==1){?>
@@ -119,32 +108,6 @@ $rs = mysqli_query($conn,$sql);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./asset/jquery/main.js"></script>
     <script>
-        // Sản Phẩm Nổi Bật 
-        function hot_prd(id,hot){
-            // if(hot==0){
-            //     alert("Ngừng kinh doanh sản phẩm này?");
-            // }else{
-            //     alert("Kinh doanh lại sản phẩm này?");
-            // }
-            $.ajax({
-                type: "POST",
-                url: './process.php?hot-prd',
-                data: {id:id,hot:hot}, // Gửi dữ liệu
-                success: function(response) {
-                    response = JSON.parse(response);
-                    if (response.status == "0") {
-                        alert(response.message);
-                        console.log(response.message);
-                    } else {
-                        alert(response.message);
-                        console.log(response.message);
-                        location.reload();
-                    }
-                }
-            });
-        }
-
-        // Kinh Doanh Sản Phẩm
         function stt_prd(id,status){
             if(status==0){
                 alert("Ngừng kinh doanh sản phẩm này?");

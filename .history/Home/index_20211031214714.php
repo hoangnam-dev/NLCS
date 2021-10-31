@@ -87,7 +87,7 @@ $rs_category = mysqli_query($conn, $sql_category);
                                         </div>
                                     </div>
                                 <?php } // End IF-ELSE
-                                }?> <!-- END WHILE -->
+                                } ?> <!-- END WHILE -->
 
                             </div>
                         </div>

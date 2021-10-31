@@ -694,7 +694,7 @@ if (isset($_GET['hot-prd'])) {
     //     'message' => $product_hot
     // ));
     // exit;
-    $sql = "UPDATE SanPham SET NoiBat='$product_hot' WHERE `SanPham`.`MSSP` = '$product_id';";
+    $sql = "UPDATE SanPham SET TrangThai='$product_hot' WHERE `SanPham`.`MSSP` = '$product_id';";
     mysqli_query($conn, $sql);
     if (mysqli_query($conn, $sql) == true) {
         echo json_encode(array(

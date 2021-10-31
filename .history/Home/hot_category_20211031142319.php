@@ -4,6 +4,18 @@ $brand_id = $_GET['brand'];
 $sql = "SELECT * FROM ThuongHieu WHERE ThuongHieu.MSTH = '$brand_id'";
 $rs = mysqli_query($conn, $sql);
 
+// $sql_brand = "SELECT * FROM `ThuongHieu`";
+// $rs_brand = mysqli_query($conn, $sql_brand);
+// while ($brands = mysqli_fetch_array($rs_brand)) {
+//     echo "<pre>";
+//     print_r($brands['TenTH']);
+// }
+// echo $brand_id;
+// exit;
+
+
+
+// $sql_prd = "SELECT * FROM LoaiSanPham WHERE LoaiSanPham.TenLSP = ''";
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -12,7 +24,7 @@ $rs = mysqli_query($conn, $sql);
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HNStore</title>
+    <title>Sản phẩm theo loại</title>
     <!--Reset CSS -->
     <link rel="stylesheet" href="./asset/normalize.css" />
     <!-- CSS and font of Web -->
@@ -42,14 +54,11 @@ $rs = mysqli_query($conn, $sql);
                                 <?php
                                 $sql_brand = "SELECT * FROM `ThuongHieu`";
                                 $rs_brand = mysqli_query($conn, $sql_brand);
-                                while ($brands = mysqli_fetch_assoc($rs_brand)) { ?>
+                                while ($brands = mysqli_fetch_array($rs_brand)) { ?>
                                     <li class="category-item">
-                                        <a href="./category.php?brand=<?php echo $brands['MSTH'];?>" 
-                                            class="category_link 
-                                            <?php if ($brands['MSTH'] == $brand_id) {
-                                            echo 'category_item-active';} ?>">
-                                            <?php echo $brands['TenTH']; ?>
-                                        </a>
+                                        <a href="./category.php?brand=<?php echo $brands['MSTH']; ?>" class="category_link <?php if ($brands['MSTH'] == $brand_id) {
+                                                                                                                                echo 'category_item-active';
+                                                                                                                            } ?>"><?php echo $brands['TenTH']; ?></a>
                                     </li>
                                 <?php } ?>
                             </ul>
@@ -64,8 +73,7 @@ $rs = mysqli_query($conn, $sql);
                             <span class="ctn_filter-title">Sắp xếp</span>
                             <button class="button ctn_btn">Phổ biến</button>
                             <button class="button ctn_btn">Mới nhất</button>
-                            <!-- <button class="button ctn_btn" onclick='location.assign("./hot_category.php?brand=<?php echo $brand_id; ?>&hot")'>Nổi bật</button> -->
-                            <button class="button ctn_btn" onclick='location.assign("./category.php?brand=<?php echo $brand_id; ?>&hot")'>Nổi bật</button>
+                            <button class="button ctn_btn">Nổi bật</button>
                             <div class="select-input">
                                 <span class="select-input_label">Giá</span>
                                 <i class="fas fa-angle-down select-input_icon"></i>
@@ -80,15 +88,8 @@ $rs = mysqli_query($conn, $sql);
                                 <!-- Product Item -->
                                 <?php
                                 $brand_id = $brand["MSTH"];
-                                if (isset($_GET['hot'])) {
-                                    $sql_prd = "SELECT * FROM `sanpham` WHERE SanPham.NoiBat = '1' AND sanpham.MSTH = '$brand_id';";
-                                    $rs_prd = mysqli_query($conn, $sql_prd);
-                                } else {
-                                    $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MSTH = '$brand_id';";
-                                    $rs_prd = mysqli_query($conn, $sql_prd);
-                                }
-                                // $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MSTH = '$brand_id';";
-                                // $rs_prd = mysqli_query($conn, $sql_prd);
+                                $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MSTH = '$brand_id';";
+                                $rs_prd = mysqli_query($conn, $sql_prd);
                                 while ($product = mysqli_fetch_array($rs_prd)) {
                                     // $brand_id = $brand["MSTH"];
                                     // $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MaLSP = '$brand_id';";

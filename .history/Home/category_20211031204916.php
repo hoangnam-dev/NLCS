@@ -4,6 +4,9 @@ $brand_id = $_GET['brand'];
 $sql = "SELECT * FROM ThuongHieu WHERE ThuongHieu.MSTH = '$brand_id'";
 $rs = mysqli_query($conn, $sql);
 
+// $sql_brand = "SELECT * FROM ThuongHieu";
+// $rs_brand = mysqli_query($conn, $sql_brand);
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
