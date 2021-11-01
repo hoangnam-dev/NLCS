@@ -14,11 +14,11 @@
                 </a>
                 <h3 class="product-item_name"><?php echo $product["TenSP"] ?></h3>
                 <div class="product-item_price">
-                    <?php if ($product["GiaBan"] > 0) { ?>
-                        <span class="product-item_price-old"><?php echo number_format($product["Gia"], 0, ',', '.'); ?>&nbsp; VNĐ</span>
-                        <span class="product-item_price-new"><?php echo number_format($product["GiaBan"], 0, ',', '.'); ?>&nbsp; VNĐ</span>
+                    <?php if (number_format($product['GiaBan'], 0, ',', '.') <= 0) { ?>
+                        <span class="product-item_price-new"><?php echo number_format($product['Gia'], 0, ',', '.') ?></span>
                     <?php } else { ?>
-                        <span class="product-item_price-new"><?php echo number_format($product["GiaBan"], 0, ',', '.'); ?>&nbsp; VNĐ</span>
+                        <span class="product-item_price-old"><?php echo number_format($product['Gia'], 0, ',', '.') ?></span>
+                        <span class="product-item_price-new"><?php echo number_format($product['GiaBan'], 0, ',', '.') ?></span>
                     <?php } ?>
                 </div>
                 <span class="product-item_description"><?php echo $product['MoTa'] ?></span>

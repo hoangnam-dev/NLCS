@@ -60,12 +60,16 @@ include("./header.php");
                                     <div class="grid_col-3">
                                         <div class="product-item">
                                             <a href="./product-detail.php" class="product-img">
-                                                <div class="product-item_img" style="background-image: url('../img_upload/<?php echo $product['AnhSP'] ?>');"></div>
+                                                <div class="product-item_img" style="background-image: url('../img_upload/<?php echo $product['Avatar'] ?>');"></div>
                                             </a>
                                             <h3 class="product-item_name"><?php echo $product['TenSP'] ?></h3>
                                             <div class="product-item_price">
-                                                <span class="product-item_price-old"><?php echo number_format($product['Gia'], 0, ',', '.') ?></span>
-                                                <span class="product-item_price-new"><?php echo number_format($product['GiaBan'], 0, ',', '.') ?></span>
+                                                <?php if(number_format($product['GiaBan'], 0, ',', '.') <= 0){?>
+                                                    <span class="product-item_price-new"><?php echo number_format($product['Gia'], 0, ',', '.')?></span>    
+                                                <?php } else{?>
+                                                    <span class="product-item_price-old"><?php echo number_format($product['Gia'], 0, ',', '.')?></span>
+                                                    <span class="product-item_price-new"><?php echo number_format($product['GiaBan'], 0, ',', '.')?></span>
+                                                <?php }?>
                                             </div>
                                             <span class="product-item_description"><?php echo $product['MoTa'] ?></span>
                                             <div class="product-item_rating">
