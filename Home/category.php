@@ -44,10 +44,10 @@ $rs = mysqli_query($conn, $sql);
                                 $rs_brand = mysqli_query($conn, $sql_brand);
                                 while ($brands = mysqli_fetch_assoc($rs_brand)) { ?>
                                     <li class="category-item">
-                                        <a href="./category.php?brand=<?php echo $brands['MSTH'];?>" 
-                                            class="category_link 
+                                        <a href="./category.php?brand=<?php echo $brands['MSTH']; ?>" class="category_link 
                                             <?php if ($brands['MSTH'] == $brand_id) {
-                                            echo 'category_item-active';} ?>">
+                                                echo 'category_item-active';
+                                            } ?>">
                                             <?php echo $brands['TenTH']; ?>
                                         </a>
                                     </li>
@@ -62,10 +62,9 @@ $rs = mysqli_query($conn, $sql);
                         </div>
                         <div class="ctn_filter">
                             <span class="ctn_filter-title">Sắp xếp</span>
-                            <button class="button ctn_btn">Phổ biến</button>
-                            <button class="button ctn_btn">Mới nhất</button>
-                            <!-- <button class="button ctn_btn" onclick='location.assign("./hot_category.php?brand=<?php echo $brand_id; ?>&hot")'>Nổi bật</button> -->
-                            <button class="button ctn_btn" onclick='location.assign("./category.php?brand=<?php echo $brand_id; ?>&hot")'>Nổi bật</button>
+                            <button class="button ctn_btn category_tab-active" data-ajax="population_product.php">Phổ biến</button>
+                            <button class="button ctn_btn" data-ajax="new_product.php">Mới nhất</button>
+                            <button class="button ctn_btn" data-ajax="hot_product.php">Nổi bật</button>
                             <div class="select-input">
                                 <span class="select-input_label">Giá</span>
                                 <i class="fas fa-angle-down select-input_icon"></i>
@@ -76,60 +75,8 @@ $rs = mysqli_query($conn, $sql);
                             </div>
                         </div>
                         <div class="main_product">
-                            <div class="grid_row">
-                                <!-- Product Item -->
-                                <?php
-                                $brand_id = $brand["MSTH"];
-                                if (isset($_GET['hot'])) {
-                                    $sql_prd = "SELECT * FROM `sanpham` WHERE SanPham.NoiBat = '1' AND sanpham.MSTH = '$brand_id';";
-                                    $rs_prd = mysqli_query($conn, $sql_prd);
-                                } else {
-                                    $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MSTH = '$brand_id';";
-                                    $rs_prd = mysqli_query($conn, $sql_prd);
-                                }
-                                // $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MSTH = '$brand_id';";
-                                // $rs_prd = mysqli_query($conn, $sql_prd);
-                                while ($product = mysqli_fetch_array($rs_prd)) {
-                                    // $brand_id = $brand["MSTH"];
-                                    // $sql_prd = "SELECT * FROM `sanpham` WHERE sanpham.MaLSP = '$brand_id';";
-                                    // $rs_prd = mysqli_query($conn, $sql_prd);
-                                ?>
-                                    <div class="grid_col-4">
-                                        <div class="product-item">
-                                            <a href="./product-detail.php?action=prd-detail&id=<?php echo $product["MSSP"]; ?>" class="product-img">
-                                                <div class="product-item_img" style="background-image: url('../img_upload/<?php echo $product["Avatar"] ?>');"></div>
-                                            </a>
-                                            <h3 class="product-item_name"><?php echo $product["TenSP"] ?></h3>
-                                            <div class="product-item_price">
-                                                <?php if ($product["GiaBan"] > 0) { ?>
-                                                    <span class="product-item_price-old"><?php echo number_format($product["Gia"], 0, ',', '.'); ?>&nbsp; VNĐ</span>
-                                                    <span class="product-item_price-new"><?php echo number_format($product["GiaBan"], 0, ',', '.'); ?>&nbsp; VNĐ</span>
-                                                <?php } else { ?>
-                                                    <span class="product-item_price-new"><?php echo number_format($product["Gia"], 0, ',', '.'); ?>&nbsp; VNĐ</span>
-                                                <?php } ?>
-                                            </div>
-                                            <span class="product-item_description"><?php echo $product['MoTa'] ?></span>
-                                            <div class="product-item_rating">
-                                                <i class="product-item_rating-check fa fa-star"></i>
-                                                <i class="product-item_rating-check fa fa-star"></i>
-                                                <i class="product-item_rating-check fa fa-star"></i>
-                                                <i class="product-item_rating-check fa fa-star"></i>
-                                                <i class="product-item_rating-check fa fa-star"></i>
-                                                <span class="product-item_rating-reviews">19 lượt đánh giá</span>
-                                            </div>
-                                            <div class="product-item_oder">
-                                                <a href="./product-detail.php?action=prd-detail&id=<?php echo $product["MSSP"] ?>" class="button button_general btn product-item_oder-btn">Chi tiết sản phẩm</a>
-                                            </div>
-                                            <div class="product-item_sale-off">
-                                                <span class="product-item_sale-off-label">GIẢM</span>
-                                                <span class="product-item_sale-off-precent">10%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            <?php } ?>
 
-                            </div>
+                        <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -138,6 +85,48 @@ $rs = mysqli_query($conn, $sql);
 
         <?php include("./footer.php"); ?>
     </div>
+
+
+
+    <!-- ====================== JAVA SCRIPT ====================== -->
+    <!-- <script src="./asset/jquery/main.js"></script> -->
+    <script src="./asset/jquery/jquery.js"></script>
+    <script>
+        $(function() {
+            // Lấy MSTH
+            var brand_id = '<?php echo $brand_id ?>';
+            // console.log(brand);
+            load_data('population_product.php', brand_id);
+            $('.ctn_btn').click(function() {
+                $('.ctn_btn').each(function() {
+                    $(this).removeClass('category_tab-active');
+                });
+
+                $(this).addClass('category_tab-active');
+
+                var url = $(this).data('ajax');
+                load_data(url, brand_id);
+            });
+        });
+
+        // Hàm load_data(url, brand_id)
+        function load_data(url, brand_id) {
+            if (url != undefined) {
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    data: {
+                        brand_id: brand_id
+                    },
+                    type: 'html',
+                    success: function(response) {
+                        $('.main_product').html(response);
+                    }
+                });
+            }
+        }
+    </script>
+
 </body>
 
 </html>
