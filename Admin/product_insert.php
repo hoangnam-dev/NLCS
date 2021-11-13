@@ -36,7 +36,7 @@ $rs1 = mysqli_query($conn, $sql1);
                     <div class="content-title">
                         <h2>Thông tin sản phẩm</h2>
                     </div>
-                    <form id="from-ins-prd" class="product_insert-form" method="POST" enctype="multipart/form-data">
+                    <form id="form-ins-prd" class="product_insert-form" method="POST" enctype="multipart/form-data">
                         <!-- <form id="from-ins-prd" action="./test.php?ins-prd" class="product_insert-form" method="POST" enctype="multipart/form-data"> -->
                         <div class="main_form">
                             <div class="main-form_left">
@@ -63,9 +63,12 @@ $rs1 = mysqli_query($conn, $sql1);
                             </div>
                             <div class="main-form_right">
                                 <div class="form-input">
-                                    <label class="form_label">Ảnh sản phẩm:</label>
-                                    <input id="image" type="file" onchange="return getImg();" class="form_input" name="image_name">
-                                    <input id="input-img" type="hidden" class="form_input" name="product_image">
+                                    <label class="form_label">Avatar sản phẩm:</label>
+                                    <input id="image" type="file" class="form_input" name="image_name">
+                                </div>
+                                <div class="form-input">
+                                    <label class="form_label">Ảnh khác của sản phẩm:</label>
+                                    <input type="file" class="form_input" id="file" name="files[]" multiple/>
                                 </div>
                                 <div class="form-input">
                                     <label class="form_label">Ngày ra mắt</label>
@@ -118,7 +121,7 @@ $rs1 = mysqli_query($conn, $sql1);
                                     <label class="form_label">Bộ nhớ trong:</label>
                                     <input type="text" class="form_input" name="rom">
                                 </div>
-                                
+
                             </div>
                             <div class="main-form_right">
                                 <div class="form-input">
@@ -155,54 +158,24 @@ $rs1 = mysqli_query($conn, $sql1);
     <!-- <script type="text/javascript" src="./asset/bootstrap/js/bootstrap.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Lấy tên ảnh của input[type=file]
-        function getImg() {
-            var name = $("#image").prop('files')[0];
-            // console.log(name['name']);
-            // Gán tên lấy được vào input[type=hidden]
-            document.getElementById('input-img').value = name['name'];
-            return true;
-        }
         // Ajax
         // Upload Product Image + Insert Product
-        $("#from-ins-prd").submit(function(event) {
+        $("#form-ins-prd").submit(function(event) {
             event.preventDefault();
-            var file_data = $("#image").prop('files')[0];
-            // // Khởi tạo form data
-            var img_data = new FormData();
-            // Thêm file_data vào img_data
-            img_data.append('file', file_data);
             $.ajax({
-                type: "POST",
-                url: "./process.php?ins-prd-img",
-                data: img_data, // Gửi dữ liệu của ảnh trong img_data
-                cache: false,
+                type: 'POST',
+                url: 'process.php?ins-prd',
+                data: new FormData(this), // Gửi dũ liệu của form(input+file) bằng PT FormData
+                dataType: 'json',
                 contentType: false,
+                cache: false,
                 processData: false,
-                success: function(response) {
-                    response = JSON.parse(response);
-                    if (response.status == "0") {
+                success: function(response) { //console.log(response);
+                    if (response.status == 0) {
                         alert(response.message);
-                        console.log(response.message);
                     } else {
-                        // alert(response.message);
-                        console.log(response.message);
-                        $.ajax({
-                        type: "POST",
-                        url: './process.php?ins-prd',
-                        data: $("#from-ins-prd").serializeArray(), // Gửi dữ liệu của form
-                        success: function(response) {
-                            response = JSON.parse(response);
-                            if (response.status == "0") {
-                                alert(response.message);
-                                console.log(response.message);
-                            } else {
-                                alert(response.message);
-                                console.log(response.message);
-
-                            }
-                        }
-                    });
+                        alert(response.message);
+                        location.reload();
                     }
                 }
             });

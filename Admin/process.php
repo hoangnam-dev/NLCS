@@ -121,7 +121,7 @@ if (isset($_GET['upd-category'])) {
 
 // Delete Category
 if (isset($_GET['action']) && $_GET['action'] == 'delete-category') {
-    if ($_REQUEST['id'] and $_REQUEST['id'] != '') {
+    if ($_POST['id'] and $_POST['id'] != '') {
         $category_id = $_GET['id'];
         // echo $category_id;exit;
         $find_prd = "SELECT * FROM `SanPham` WHERE `SanPham`.`MLSP` = '$category_id';";
@@ -271,20 +271,28 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete-brand') {
 // Product
 // Add Product
 if (isset($_GET['ins-prd'])) {
-    if (isset($_POST['product_name']) && isset($_POST['product_price']) && isset($_POST['product_quantity'])) {
+    if (isset($_FILES['image_name']) && isset($_FILES['files'])) {
+        // if (isset($_POST['product_name']) && isset($_POST['product_price']) && isset($_POST['product_quantity']) && isset($_FILES['image_name'])) {
+        
         // Product Information
-        $product_name = $_POST['product_name'];
-        $product_description = $_POST['product_description'];
-        $product_price = str_replace(array('.', ','), '', $_POST['product_price']);
-        $product_sale = str_replace(array('.', ','), '', $_POST['product_sale']);
-        $product_img = $_POST['product_image'];
-        $product_quantity = $_POST['product_quantity'];
-        $product_debuts =  $_POST['product_debuts'];
-        $product_madein = $_POST['product_madein'];
-        $create_at = date("Y-m-d");
-        $product_status = 1;
-        $product_category = $_POST['product_category'];
-        $product_brand = $_POST['product_brand'];
+        // $product_name = $_POST['product_name'];
+        // $product_description = $_POST['product_description'];
+        // $product_price = str_replace(array('.', ','), '', $_POST['product_price']);
+        // $product_sale = str_replace(array('.', ','), '', $_POST['product_sale']);
+        // $product_quantity = $_POST['product_quantity'];
+        // $product_debuts =  $_POST['product_debuts'];
+        // $product_madein = $_POST['product_madein'];
+        // $create_at = date("Y-m-d");
+        // $product_status = 1;
+        // $product_category = $_POST['product_category'];
+        // $product_brand = $_POST['product_brand'];
+        $images = $_FILES['image_name'];
+        $img = $images['name'];
+        echo json_encode(array(
+            'status' => 0,
+            'message' => 'test ok'.$img
+        ));
+        exit;
 
         $sql = "INSERT INTO `SanPham` (`MSSP`, `TenSP`, `MoTa`, `Gia`, `GiaBan`,  `Avatar`,`SoLuongHang`, `NgayRaMat`, `XuatXu`, `NgayTao`, `TrangThai`, `MLSP`,`MSTH`) VALUES (NULL, '$product_name', '$product_description', '$product_price','$product_sale', '$product_img', '$product_quantity','$product_debuts','$product_madein','$create_at','$product_status','$product_category','$product_brand'); ";
         $rs = mysqli_query($conn, $sql);

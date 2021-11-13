@@ -73,7 +73,7 @@ $rs = mysqli_query($conn,$sql);
     <!-- <script src="./asset/jquery/main.js"></script> -->
     <script>
         // Ajax
-        // Delete Staff
+        // Delete
         $(".btn-delete").click(function(event) {
             var id = $(this).val();
             var notify = "Bạn có chắc muốn xóa";
@@ -81,7 +81,7 @@ $rs = mysqli_query($conn,$sql);
                 event.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url: "./process.php?del-staff",
+                    url: "./process.php?del-category",
                     data: {id:id},
                     success: function(response) {
                         response = JSON.parse(response);
